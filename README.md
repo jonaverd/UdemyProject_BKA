@@ -31,9 +31,9 @@
 ## Sección 7: Programa una cuenta bancaria
 
 ### Ejercicios
-| -   | -   | -   | 
-|-----|-----|-----|
-
+| Classes     | Atributes | Methods       | 
+|-------------|-----------|---------------|
+| Inheritance | Polimorph | Special Types | 
 
 
 ### Problemas
