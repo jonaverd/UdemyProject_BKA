@@ -1,18 +1,10 @@
 import os
 from random import randint
+from helper import *
 
 
 class Persona:
     """clase para almacenar datos personales"""
-
-    @staticmethod
-    def validar_palabra(input):
-        """valida que la entrada contenga solo letras"""
-        input = input.replace(" ", "")
-        if input.isalpha():
-            return True
-        else:
-            return False
 
     def __init__(self, nombre, apellido):
         self.nombre = nombre
@@ -24,15 +16,6 @@ class Cliente(Persona):
     numero_cuenta = None
     balance = None
 
-    @staticmethod
-    def validar_numero(input):
-        """valida que la entrada contenga solo numeros"""
-        input = input.replace('.','',1)
-        if input.isdigit():
-            return True
-        else:
-            return False
-
     @classmethod
     def generar_cuenta(cls, n):
         range_start = 10 ** (n - 1)
@@ -42,11 +25,11 @@ class Cliente(Persona):
 
     def comprobar_saldo(self, cantidad):
         if self.balance == 0:
-            limpiar()
+            Tools.clean()
             print(f"No hay saldo en la cuenta disponible")
             return False
         elif self.balance - cantidad < 0:
-            limpiar()
+            Tools.clean()
             print(f"No se puede retirar más de {round(self.balance, 2)}€")
             return False
         else:
@@ -54,23 +37,16 @@ class Cliente(Persona):
 
     def depositar(self, cantidad):
         self.balance += cantidad
-        limpiar()
-        print(f"Operación completada")
+        Tools.loading_pattern()
 
     def retirar(self, cantidad):
         if self.comprobar_saldo(cantidad):
             self.balance -= cantidad
-            limpiar()
-            print(f"Operación completada")
+            Tools.loading_pattern()
 
     def __str__(self):
         return f'Cliente {self.nombre.upper()} {self.apellido.upper()} Cuenta {self.numero_cuenta}\n' \
                f'El saldo actual es {round(self.balance, 2)}€'
-
-
-def limpiar():
-    """limpia el terminal de salida"""
-    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def crear_cliente():
@@ -78,17 +54,17 @@ def crear_cliente():
     print("NUEVO CLIENTE BANKINTER")
     nombre = input("Introduce tu nombre: ")
 
-    while not Persona.validar_palabra(nombre):
-        limpiar()
+    while not Tools.validate_string(nombre):
+        Tools.clean()
         print("NUEVO CLIENTE BANKINTER")
         nombre = input("Introduce tu nombre: ")
     else:
-        limpiar()
+        Tools.clean()
         print("NUEVO CLIENTE BANKINTER")
         apellido = input("Introduce tu apellido: ")
 
-        while not Persona.validar_palabra(apellido):
-            limpiar()
+        while not Tools.validate_string(apellido):
+            Tools.clean()
             print("NUEVO CLIENTE BANKINTER")
             apellido = input("Introduce tu apellido: ")
         else:
@@ -114,13 +90,13 @@ def menu(cliente):
 
     while not option == '3':
         if option == '1':
-            limpiar()
+            Tools.clean()
             print("BANKINTER (DEPOSITAR)")
             print(f">> Cuenta seleccionada {cliente.numero_cuenta}")
             cantidad = input("\nIndique la cantidad a ingresar: ")
 
-            while not Cliente.validar_numero(cantidad):
-                limpiar()
+            while not Tools.validate_number(cantidad):
+                Tools.clean()
                 print("BANKINTER (DEPOSITAR)")
                 print(f">> Cuenta seleccionada {cliente.numero_cuenta}")
                 cantidad = input("\nIndique la cantidad a ingresar: ")
@@ -130,13 +106,13 @@ def menu(cliente):
                 input("\n<< pulsa para volver >> ")
 
         elif option == '2':
-            limpiar()
+            Tools.clean()
             print("BANKINTER (RETIRAR)")
             print(f">> Cuenta seleccionada {cliente.numero_cuenta}")
             cantidad = input("\nIndique la cantidad a extraer: ")
 
-            while not Cliente.validar_numero(cantidad):
-                limpiar()
+            while not Tools.validate_number(cantidad):
+                Tools.clean()
                 print("BANKINTER (RETIRAR)")
                 print(f">> Cuenta seleccionada {cliente.numero_cuenta}")
                 cantidad = input("\nIndique la cantidad a extraer: ")
@@ -145,7 +121,7 @@ def menu(cliente):
                 cliente.retirar(float(cantidad))
                 input("\n<< pulsa para volver >> ")
 
-        limpiar()
+        Tools.clean()
         print("BANKINTER")
         print(cliente)
         operaciones()
@@ -153,16 +129,16 @@ def menu(cliente):
         option = input("¿Que desea hacer? ")
 
     else:
-        limpiar()
+        Tools.clean()
         print("BANKINTER (SALIR)")
         print(f"¡Hasta pronto!")
 
 
 def inicio():
     """ejecuta el programa principal"""
-    limpiar()
+    Tools.clean()
     cliente = crear_cliente()
-    limpiar()
+    Tools.clean()
     menu(cliente)
 
 

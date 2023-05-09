@@ -51,6 +51,10 @@
 
 ![](project00.png)
 
+![](project22.png)
+
+![](project11.png)
+
 ### Instrucciones
 
 - Instar última versíón de Python
